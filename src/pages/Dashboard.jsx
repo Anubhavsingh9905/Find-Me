@@ -1,6 +1,15 @@
-import React from 'react';
+import {React, useEffect} from 'react';
+import { useAuth } from '../components/AuthProvider';
+
 
 const Dashboard = () => {
+
+  const {refreshAuth} = useAuth();
+
+  useEffect(() => {
+    refreshAuth();
+  }, [])
+
   return (
     <div className="min-h-[10vh] bg-gradient-to-r from-blue-500 to-green-500 text-white flex flex-col items-center justify-center px-4 text-center">
       

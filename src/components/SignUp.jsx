@@ -1,15 +1,53 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthProvider';
 
 const SignUp = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  let {isLoggedIn, setIsLoggedIn} = useAuth();
+
+  const [UserName, setUserName] = useState('');
+  const [password, setpassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [emailId, setEmailId] = useState('');
+  const [otp, setOtp] = useState('');
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Signing up with:', { firstName, lastName, phoneNumber, emailId });
-    // Add further logic like sending to API here
+    console.log('Signing up with:', { UserName, phoneNumber, emailId });
+
+    const username = UserName;
+    try{
+      let response = await axios.post("http://localhost:4000/email/register", {username, emailId, password, otp, phoneNumber}, {withCredentials: true});
+      
+      const data = await response.data; // message
+      console.log(data);
+      setIsLoggedIn(true);
+      navigate("/dashboard");
+
+    }catch(err){
+      if(err.response && err.response.data && err.response.data.message){
+        alert(err.response.data.message);
+        console.log(err.response.data.message);
+      }
+      else{
+        alert(err.message);
+        console.log(`Error: ${err.message}`);
+      }
+    }
+  };
+  
+  const sendOtp = (e) => {
+    e.preventDefault();
+    if (!emailId) {
+      alert("Please enter an Email ID before sending OTP."); 
+      return;
+    }
+    axios.post("http://localhost:4000/email/sendOtp", {emailId}).then((data) => {
+      console.log(data);
+    });
   };
 
   return (
@@ -19,24 +57,12 @@ const SignUp = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 mb-1">First Name</label>
+            <label className="block text-gray-700 mb-1">User Name</label>
             <input
               type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder="Enter First Name"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 mb-1">Last Name</label>
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              placeholder="Enter Last Name"
+              value={UserName}
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder="Enter User Name"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -55,15 +81,48 @@ const SignUp = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-1">Email ID</label>
+            <label className="block text-gray-700">Email ID</label>
             <input
               type="email"
               value={emailId}
               onChange={(e) => setEmailId(e.target.value)}
               placeholder="Enter Email ID"
+              className="w-64 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <button
+              onClick={sendOtp}
+              className="bg-blue-400 text-white py-2 p-3 m-4 rounded-md hover:bg-blue-500 transition-colors"
+            >
+              Send OTP
+            </button>
+            {/* otp is print on console */}
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1">OTP</label>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+            
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
+              placeholder="Enter Password"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            
           </div>
 
           <button

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect}from 'react';
+import LogOut from './LogOut';
 
 const Navbar = () => {
+  
   return (
     <nav className="bg-white shadow-md p-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -20,9 +22,7 @@ const Navbar = () => {
           <li>
             <a href="#" className="hover:text-blue-600 transition-colors">Report Sighting</a>
           </li>
-          <li>
-            <a href="#" className="hover:text-blue-600 transition-colors">Dashboard</a>
-          </li>
+          <LogOut/>
         </ul>
 
       </div>

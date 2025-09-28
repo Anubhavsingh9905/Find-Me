@@ -11,12 +11,12 @@ import Contact from './components/Contact'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
-
+import { AuthProvider, useAuth} from './components/AuthProvider'
+import ProtectedDashboard from './ProtectedDashboard'
 
 function App() {
 
   const router = createBrowserRouter([
-
     {
       path: "/",
       element: <><HomeNav/> <Home/> <Footer/></>
@@ -24,7 +24,9 @@ function App() {
 
     {
       path: "/dashboard",
-      element: <><Navbar/> <Dashboard/> <UploadPhoto/> <CctvView/> <ReportSighting/> <Footer/></>
+      element: (
+        <ProtectedDashboard/>
+      ),
     },
 
     {
@@ -41,7 +43,9 @@ function App() {
 
   return (
     <>
-    <RouterProvider router={router}/>
+    <AuthProvider>
+      <RouterProvider router={router}/>
+    </AuthProvider>
     </>
   )
 }

@@ -1,6 +1,8 @@
-import React from 'react';
+import {React, useEffect} from 'react';
+import { useAuth } from "../components/AuthProvider";
 
 const HomePage = () => {
+  let {isLoggedIn} = useAuth();
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-green-500 text-white flex flex-col items-center justify-center px-4 text-center">
       
@@ -12,12 +14,15 @@ const HomePage = () => {
         Helping reunite families and find lost individuals in large gatherings using advanced technology
       </p>
 
-      <a
-        href="/signup"
-        className="bg-blue-600 hover:bg-blue-700 transition-colors px-6 py-3 rounded-md text-lg font-semibold shadow-md"
-      >
-        Register Now
-      </a>
+      { !isLoggedIn ?
+        <a
+          href="/signup"
+          className="bg-blue-600 hover:bg-blue-700 transition-colors px-6 py-3 rounded-md text-lg font-semibold shadow-md"
+        >
+          Register Now
+        </a> 
+        : null
+      }
     </div>
   );
 };
