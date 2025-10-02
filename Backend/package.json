@@ -27,11 +27,12 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
     "pg": "^8.16.3",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "ws": "^8.18.3"
   },
   "name": "backend",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "start": "node your-script.js",
     "test": "echo \"Error: no test specified\" && exit 1"

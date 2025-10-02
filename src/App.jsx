@@ -13,6 +13,8 @@ import Login from './components/Login'
 import SignUp from './components/SignUp'
 import { AuthProvider, useAuth} from './components/AuthProvider'
 import ProtectedDashboard from './ProtectedDashboard'
+import { Receiver } from './components/Reciver'
+import { Sender } from './components/Sender'
 
 function App() {
 
@@ -38,7 +40,10 @@ function App() {
       path: "/signup",
       element: <><SignUp/></>
     },
-    
+    {
+      path: "/sender",
+      element: <><Sender/></>
+    }
   ])
 
   return (
