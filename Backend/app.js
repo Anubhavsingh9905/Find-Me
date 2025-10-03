@@ -9,17 +9,17 @@ const passport = require("passport");
 const session = require("express-session");
 const mongoose = require("mongoose");
 
-const User = require("./model/user");
-
-const app = express();
-
 const localAuthenticateRouter = require("./router/authenticateLocal");
 const googleAuthenticateRouter = require("./router/authenticateGoogle");
 const photoUpload = require("./router/uploadPhoto");
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const User = require("./model/user");
+
+
+const app = express();
 
 async function main() {
-  await mongoose.connect(process.env.MONGOOSE_CONNECT);
+  await mongoose.connect(process.env.ATLASDB_URL);
 }
 
 main().then(() => {
@@ -65,20 +65,9 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
-//ip address of web camera
-let url = "http://192.168.43.1:8080";
-
 app.use("/email", localAuthenticateRouter);
 app.use("/", googleAuthenticateRouter);
 app.use("/photo", photoUpload);
-
-app.get("/cctvView", (req, res) => {
-
-  const cameraURL = "http://192.168.43.1:8080/video";
-  res.json(cameraURL);
-
-});
 
 
 module.exports = app;
