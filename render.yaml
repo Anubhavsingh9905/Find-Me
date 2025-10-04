@@ -1,6 +1,5 @@
 services:
   - name: find-me-backend
-    type: service
     serviceType: web
     env: node
     plan: free
@@ -16,7 +15,6 @@ services:
         value: 4000
 
   - name: find-me-frontend
-    type: service
     serviceType: static
     env: node
     plan: free
