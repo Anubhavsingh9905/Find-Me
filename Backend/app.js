@@ -7,6 +7,7 @@ const localStrategy = require("passport-local");
 const cors = require('cors');
 const passport = require("passport");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const mongoose = require("mongoose");
 
 const localAuthenticateRouter = require("./router/authenticateLocal");
@@ -18,8 +19,10 @@ const User = require("./model/user");
 
 const app = express();
 
+const dbUrl = process.env.ATLASDB_URL;
+
 async function main() {
-  await mongoose.connect(process.env.ATLASDB_URL);
+  await mongoose.connect(dbUrl);
 }
 
 main().then(() => {
@@ -37,16 +40,31 @@ app.use(require('cookie-parser')());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 1000 * 60 * 60,
-    secure: false,       // localhost pe false rakho
-    httpOnly: true       // XSS se protection
-  }
-}));
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SCERET,
+    },
+    touchAfter: 24 * 3600,
+});
+
+store.on("error", () => {
+    console.log("Error in MONGO SESSION STORE", error);
+});
+
+const sessionOption = {
+    store,
+    secret: process.env.SCERET,
+    resave: false,
+    saveUninitialized: true,
+    cookie:{
+        expires: Date.now + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+    },
+};
+
+app.use(session(sessionOption));
 
 app.use(passport.initialize());
 app.use(passport.session());
