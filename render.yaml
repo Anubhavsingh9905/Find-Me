@@ -1,6 +1,6 @@
 services:
   - name: find-me-backend
-    type: web_service
+    type: web
     env: node
     plan: free
     branch: main
