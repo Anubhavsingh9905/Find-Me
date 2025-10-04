@@ -2,7 +2,6 @@ services:
   - name: find-me-backend
     runtime: node
     type: web
-    plan: free
     branch: main
     buildCommand: cd Backend && npm install
     startCommand: cd Backend && npm start
@@ -17,7 +16,6 @@ services:
   - name: find-me-frontend
     runtime: static
     type: web
-    plan: free
     branch: main
     buildCommand: npm install && npm run build
     envVars:
