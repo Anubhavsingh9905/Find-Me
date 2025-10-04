@@ -15,7 +15,7 @@ services:
         value: 4000
 
   - name: find-me-frontend
-    type: static_site
+    type: web
     plan: free
     branch: main
     buildCommand: npm install && npm run build
