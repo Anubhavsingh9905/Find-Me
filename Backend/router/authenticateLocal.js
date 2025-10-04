@@ -144,21 +144,25 @@ router.get("/login", isNotLoggedIn, (req,res) => {
     res.status(500).json({message: "Wrong username or password"});
 })
 
-router.post("/login", 
-    isNotLoggedIn,
-    verifyEmail,
-    passport.authenticate('local'), async (req, res) => {
- 
-    let {username} = req.body;
-    console.log("user", username);
+router.post("/login", isNotLoggedIn, verifyEmail, (req, res, next) => {
+    passport.authenticate('local', async (err, user, info) => {
+        if (err) return next(err);
+        if (!user) {
+            // authentication failed
+            return res.status(400).json({ message: "Wrong username or password" });
+        }
 
-    // let user = await User.findOne({username: username});
-    // let userId = user._id.toString()
+        // login the user and save session
+        req.logIn(user, (err) => {
+            if (err) return next(err);
 
-    // res.status(200).json({message: userId});
-    console.log("hello");
-    res.status(200).json({message: "logged in successfully"});
+            // now user is authenticated, session is saved
+            console.log("User logged in:", user.username);
+            return res.status(200).json({ message: "Logged in successfully", userId: user._id });
+        });
+    })(req, res, next);
 });
+
 
 // LOGOUT
 
