@@ -1,6 +1,6 @@
 services:
   - name: find-me-backend
-    type: web
+    type: service_web
     env: node
     plan: free
     branch: main
@@ -15,11 +15,12 @@ services:
         value: 4000
 
   - name: find-me-frontend
-    type: web
+    type: service_static
     env: node
     plan: free
     branch: main
     buildCommand: npm install && npm run build
+    publishPath: dist
     envVars:
       - key: VITE_API_URL
         value: https://find-me-backend.onrender.com
