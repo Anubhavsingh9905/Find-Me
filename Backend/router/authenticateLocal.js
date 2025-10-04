@@ -147,7 +147,7 @@ router.get("/login", isNotLoggedIn, (req,res) => {
 router.post("/login", 
     isNotLoggedIn,
     verifyEmail,
-    passport.authenticate('local', { failureRedirect: '/login' }), async (req, res) => {
+    passport.authenticate('local'), async (req, res) => {
  
     let {username} = req.body;
     console.log("user", username);

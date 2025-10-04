@@ -53,17 +53,17 @@ store.on("error", () => {
 });
 
 const sessionOption = {
-  store,
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false, // better
-  cookie: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // only true on HTTPS
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-  },
+    store,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie:{
+      expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    },
 };
 
 app.use(session(sessionOption));
