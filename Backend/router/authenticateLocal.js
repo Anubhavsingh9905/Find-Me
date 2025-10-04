@@ -149,8 +149,8 @@ router.post("/login",
     verifyEmail,
     passport.authenticate('local', { failureRedirect: '/login' }), async (req, res) => {
  
-    let {userName} = req.body;
-    console.log("user", userName);
+    let {username} = req.body;
+    console.log("user", username);
 
     // let user = await User.findOne({username: username});
     // let userId = user._id.toString()
