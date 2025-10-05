@@ -3,15 +3,6 @@ import axios from "axios";
 import { Receiver } from './Reciver';
 
 const CctvView = () => {
-  let [cameraUrl, setCameraUrl] = useState("");
-  useEffect(() => {
-    try {
-      let response = axios.get("http://localhost:4000/cctvView")
-      console.log(response.data)
-    } catch (error) {
-      
-    }
-  })
   return (
     <div className="container mx-auto p-6 bg-gray-100 rounded-lg shadow-md mt-10">
       <h2 className="text-2xl font-bold mb-4 text-center">CCTV Camera View</h2>
