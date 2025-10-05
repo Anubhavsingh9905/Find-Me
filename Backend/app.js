@@ -58,11 +58,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    crypto: {
-      secret: process.env.SESSION_SECRET,
-    },
-    touchAfter: 24 * 3600,
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+  },
+  touchAfter: 24 * 3600,
 });
 
 store.on("error", () => {
@@ -76,9 +76,10 @@ const sessionOption = {
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   },
 };
 
