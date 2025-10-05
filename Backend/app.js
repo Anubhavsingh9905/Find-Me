@@ -52,7 +52,7 @@ store.on("error", () => {
     console.log("Error in MONGO SESSION STORE", error);
 });
 
-const sessionOptions = {
+const sessionOption = {
   store,
   secret: process.env.SESSION_SECRET,
   resave: false,
