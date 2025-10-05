@@ -8,8 +8,8 @@ const cors = require('cors');
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const mongoose = require("mongoose");
 const path = require("path");
+const mongoose = require("mongoose");
 
 const localAuthenticateRouter = require("./router/authenticateLocal");
 const googleAuthenticateRouter = require("./router/authenticateGoogle");
@@ -35,21 +35,25 @@ main().then(() => {
 
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true              
+}));
 
 app.use(require('cookie-parser')());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SESSION_SECRET,
-  },
-  touchAfter: 24 * 3600,
+    mongoUrl: dbUrl,
+    crypto: {
+      secret: process.env.SESSION_SECRET,
+    },
+    touchAfter: 24 * 3600,
 });
 
 store.on("error", () => {
-  console.log("Error in MONGO SESSION STORE", error);
+    console.log("Error in MONGO SESSION STORE", error);
 });
 
 const sessionOption = {
