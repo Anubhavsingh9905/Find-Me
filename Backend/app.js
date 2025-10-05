@@ -33,7 +33,7 @@ main().then(() => {
 })
 
 
-const whitelist = ['https://find-me-1.onrender.com', "http://localhost:5173", 'http://example2.com']
+const whitelist = ['https://find-me-1.onrender.com', "http://localhost:5173",]
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -78,7 +78,7 @@ const sessionOption = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
 };

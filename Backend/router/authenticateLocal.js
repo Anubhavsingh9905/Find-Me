@@ -151,6 +151,9 @@ router.post("/login",
  
     let {username} = req.body;
     console.log("user", username);
+    console.log("Login request body:", req.body);
+    console.log("Session before login:", req.session);
+    console.log("Is authenticated:", req.isAuthenticated());
 
     // let user = await User.findOne({username: username});
     // let userId = user._id.toString()
