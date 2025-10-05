@@ -23,7 +23,7 @@ const UploadPhoto = () => {
 
     const fetchPhoto = async () => {
       try {
-        const response = await axios.get(`https://find-me-backend1.onrender.com/photo/${user._id}`, { withCredentials: true });
+        const response = await axios.get(`/photo/${user._id}`, { withCredentials: true });
         console.log("Photo:", response.data.info.photo.url);
         setPhotoUrl(response.data.info.photo.url);
       } catch (err) {
@@ -61,7 +61,7 @@ const UploadPhoto = () => {
     fromdata.append("photo", selectedFile);
 
     try{
-      await axios.post(`https://find-me-backend1.onrender.com/photo/upload/${user._id}`, fromdata, { headers: { "Content-Type": "multipart/form-data" } })
+      await axios.post(`/photo/upload/${user._id}`, fromdata, { headers: { "Content-Type": "multipart/form-data" } })
       
       await refreshAuth();
       setLoading(false);
@@ -81,7 +81,7 @@ const UploadPhoto = () => {
     setLoading(true);
 
     try{
-      await axios.post(`https://find-me-backend1.onrender.com/photo/delete/${user._id}`)
+      await axios.post(`/photo/delete/${user._id}`)
       await refreshAuth();
       setPhotoUrl(null);
       setLoading(false);

@@ -20,7 +20,7 @@ const Login = ({ login }) => {
     let username = userName;
 
     try{
-      let response = await axios.post("https://find-me-backend1.onrender.com/email/login", {username, emailId, password}, { withCredentials: true });
+      let response = await axios.post("/email/login", {username, emailId, password}, { withCredentials: true });
 
       let data = response.data;
       // console.log(data.message);
@@ -45,7 +45,7 @@ const Login = ({ login }) => {
   const handleGoogleLogin = async() => {
     // Here you can implement Google auth logic or redirect
     try{
-      window.location.href = "https://find-me-backend1.onrender.com/v1/google";
+      window.location.href = "/v1/google";
     }
     catch(err){
       if(err.response && err.response.data && err.response.data.message){
