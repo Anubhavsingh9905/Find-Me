@@ -20,7 +20,7 @@ const Login = ({ login }) => {
     let username = userName;
 
     try{
-      let response = await axios.post("/email/login", {username, emailId, password}, { withCredentials: true });
+      let response = await axios.post("http://localhost:4000/email/login", {username, emailId, password}, { withCredentials: true });
 
       let data = response.data;
       // console.log(data.message);

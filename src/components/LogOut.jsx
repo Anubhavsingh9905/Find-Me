@@ -11,7 +11,7 @@ const LogOut = () => {
     const handleLogout = async(e) => {
         console.log("logout");
         try{
-            let response = await axios.get("/email/logout", { withCredentials: true });
+            let response = await axios.get("http://localhost:4000/email/logout", { withCredentials: true });
             console.log(response.data);
             setIsLoggedIn(false);
             navigate("/");

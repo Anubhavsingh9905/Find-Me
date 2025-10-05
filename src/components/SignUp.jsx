@@ -20,7 +20,7 @@ const SignUp = () => {
 
     const username = UserName;
     try{
-      let response = await axios.post("/email/register", {username, emailId, password, otp, phoneNumber}, {withCredentials: true});
+      let response = await axios.post("http://localhost:4000/email/register", {username, emailId, password, otp, phoneNumber}, {withCredentials: true});
       
       const data = await response.data; // message
       console.log(data);
@@ -45,7 +45,7 @@ const SignUp = () => {
       alert("Please enter an Email ID before sending OTP."); 
       return;
     }
-    axios.post("/email/sendOtp", {emailId}).then((data) => {
+    axios.post("http://localhost:4000/email/sendOtp", {emailId}).then((data) => {
       console.log(data);
     });
   };

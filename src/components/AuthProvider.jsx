@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const refreshAuth = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get("/email/check-auth", {withCredentials: true,});
+      const res = await axios.get("http://localhost:4000/email/check-auth", {withCredentials: true,});
       console.log("Auth check:", res.data);
       setIsLoggedIn(res.data.isAuthenticated);
       setUser(res.data.user);
