@@ -36,7 +36,7 @@ main().then(() => {
 const whitelist = ['https://find-me-1.onrender.com', "http://localhost:5173", 'http://example2.com']
 const corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
