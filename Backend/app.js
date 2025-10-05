@@ -32,10 +32,19 @@ main().then(() => {
   console.log(err);
 })
 
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true              
-}));
+var whitelist = ["http://localhost:5173", 'http://example1.com', 'http://example2.com']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true  
+}
+
+app.use(cors(corsOptions));
 
 app.use(require('cookie-parser')());
 app.use(express.json());
@@ -60,8 +69,8 @@ const sessionOption = {
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: false,
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   },
 };
