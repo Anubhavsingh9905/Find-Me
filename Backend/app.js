@@ -35,24 +35,21 @@ main().then(() => {
 
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
 
 app.use(require('cookie-parser')());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    crypto: {
-      secret: process.env.SESSION_SECRET,
-    },
-    touchAfter: 24 * 3600,
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+  },
+  touchAfter: 24 * 3600,
 });
 
 store.on("error", () => {
-    console.log("Error in MONGO SESSION STORE", error);
+  console.log("Error in MONGO SESSION STORE", error);
 });
 
 const sessionOption = {
@@ -85,6 +82,10 @@ passport.deserializeUser(async (id, done) => {
   } catch (err) {
     done(err, null);
   }
+});
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
 app.use("/email", localAuthenticateRouter);
