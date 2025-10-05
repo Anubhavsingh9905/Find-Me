@@ -9,6 +9,7 @@ const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const localAuthenticateRouter = require("./router/authenticateLocal");
 const googleAuthenticateRouter = require("./router/authenticateGoogle");
@@ -31,10 +32,12 @@ main().then(() => {
   console.log(err);
 })
 
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true              
-}));
+
+app.use(express.static(path.join(__dirname, "client", "dist")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 app.use(require('cookie-parser')());
 app.use(express.json());
@@ -43,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
-        secret: process.env.SESSION_SECRET,
+      secret: process.env.SESSION_SECRET,
     },
     touchAfter: 24 * 3600,
 });
