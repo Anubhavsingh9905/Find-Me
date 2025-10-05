@@ -32,6 +32,7 @@ main().then(() => {
   console.log(err);
 })
 
+
 var whitelist = ["http://localhost:5173", 'http://example1.com', 'http://example2.com']
 var corsOptions = {
   origin: function (origin, callback) {
@@ -43,6 +44,12 @@ var corsOptions = {
   },
   credentials: true  
 }
+
+app.use((req, res, next) => {
+  console.log("Request origin:", req.headers.origin);
+  next();
+});
+
 
 app.use(cors(corsOptions));
 
