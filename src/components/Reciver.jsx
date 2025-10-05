@@ -4,7 +4,7 @@ export const Receiver = () => {
     const videoRef = useRef(null);
     
     useEffect(() => {
-        const socket = new WebSocket("ws://find-me-backend1.onrender.com");
+        const socket = new WebSocket("wss://find-me-backend1.onrender.com");
         socket.onopen = () => {
             socket.send(JSON.stringify({
                 type: 'receiver'
