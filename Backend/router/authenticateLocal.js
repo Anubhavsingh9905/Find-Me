@@ -13,10 +13,13 @@ const router = express.Router();
 
 
 router.get("/check-auth", (req, res) => {
-  if (req.isAuthenticated && req.isAuthenticated()) {
-    return res.json({ isAuthenticated: true, user: req.user });
-  }
-  res.json({ isAuthenticated: false, user: null });
+    console.log("Check-auth cookies:", req.headers.cookie);
+    console.log("Is authenticated:", req.isAuthenticated());
+
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        return res.json({ isAuthenticated: true, user: req.user });
+    }
+    res.json({ isAuthenticated: false, user: null });
 })
 
 router.get("/", (req, res) => {
