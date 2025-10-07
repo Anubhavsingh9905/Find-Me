@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Info = require('../model/info');
-const {storage, cloudinary} = require('../cloudConfig');
+const Info = require('../model/info.js');
+const {storage, cloudinary} = require('../cloudConfig.js');
 const multer = require('multer');
 const { isLoggedIn } = require('../middlewares');
 const router = express.Router();

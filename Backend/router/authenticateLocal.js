@@ -5,16 +5,16 @@ if(process.env.NODE_ENV != "production"){
 const express = require("express");
 const passport = require("passport");
 const nodemailer = require("nodemailer");
-const User = require("../model/user");
+const User = require("../model/user.js");
 const validateregister = require("../middlewares");
 const {isNotLoggedIn, isLoggedIn, verifyEmail} = require("../middlewares");
-const user = require('../model/user');
+const user = require('../model/user.js');
 const router = express.Router();
 
 
 router.get("/check-auth", (req, res) => {
-    console.log("Check-auth cookies:", req.headers.cookie);
-    console.log("Is authenticated:", req.isAuthenticated());
+    // console.log("Check-auth cookies:", req.headers.cookie);
+    // console.log("Is authenticated:", req.isAuthenticated());
 
     if (req.isAuthenticated && req.isAuthenticated()) {
         return res.json({ isAuthenticated: true, user: req.user });

@@ -6,7 +6,7 @@ const express = require('express');
 const passport = require('passport');
 const {isNotLoggedIn} = require("../middlewares");
 const GoogleStrategy = require('passport-google-oauth20').Strategy; 
-const User = require("../model/user");
+const User = require("../model/user.js");
 const router = express.Router();
 
 passport.use(
@@ -44,9 +44,9 @@ passport.deserializeUser((user, done) => {
 });
 
 
-router.get("/", (req, res) => {
-    res.status(400).json({message: "login again"});
-})
+// router.get("/", (req, res) => {
+//     res.status(400).json({message: "login again"});
+// })
 
 
 router.get(  
@@ -61,7 +61,7 @@ router.get(
   isNotLoggedIn,
   passport.authenticate('google', { failureRedirect: '/' }),  
   (req, res) => {  
-    res.redirect(`http://localhost:5173/dashboard`)
+    res.redirect(`http://localhost:4000/dashboard`)
   }  
 );
 

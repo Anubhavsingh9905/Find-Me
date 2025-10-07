@@ -5,7 +5,7 @@ export const Sender = () => {
     const [pc, setPC] = useState(null)
 
     useEffect(() => {
-        const socket = new WebSocket(import.meta.env.VITE_WS_HOST);
+        const socket = new WebSocket("ws://localhost:4000");
         setSocket(socket);
         socket.onopen = () => {
             socket.send(JSON.stringify({

@@ -19,8 +19,12 @@ const User = require("./model/user");
 
 
 const app = express();
+app.set('trust proxy', true);
 
-const dbUrl = process.env.ATLASDB_URL;
+
+const _dirname = path.resolve();
+
+const dbUrl = process.env.MONGOOSE_CONNECT;
 
 async function main() {
   await mongoose.connect(dbUrl);
@@ -33,7 +37,7 @@ main().then(() => {
 })
 
 
-const whitelist = ['https://find-me-1.onrender.com', "http://localhost:5173",]
+const whitelist = ['https://find-me-1.onrender.com', "http://localhost:5173", 'http://localhost:4000']
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -106,5 +110,9 @@ app.use("/email", localAuthenticateRouter);
 app.use("/", googleAuthenticateRouter);
 app.use("/photo", photoUpload);
 
+app.use(express.static(path.join(__dirname, "../Frontend/dist")));
+app.get("/{*splat}", (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'Frontend', 'dist', 'index.html'));
+});
 
 module.exports = app;

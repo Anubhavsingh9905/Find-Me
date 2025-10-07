@@ -7,8 +7,8 @@ export default defineConfig({
     host: true,
     port: 5173,
     allowedHosts: [
-      "find-me-1.onrender.com",  // your deployed frontend
-      "localhost",               // local dev
+      "find-me-1.onrender.com",
+      "localhost",              
     ],
   }
 })
