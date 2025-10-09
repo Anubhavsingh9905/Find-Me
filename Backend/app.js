@@ -24,7 +24,7 @@ app.set('trust proxy', true);
 
 const _dirname = path.resolve();
 
-const dbUrl = process.env.MONGOOSE_CONNECT;
+const dbUrl = process.env.ATLASDB_URL;
 
 async function main() {
   await mongoose.connect(dbUrl);
