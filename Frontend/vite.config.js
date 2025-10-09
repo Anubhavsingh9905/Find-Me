@@ -7,7 +7,7 @@ export default defineConfig({
     host: true,
     port: 5173,
     allowedHosts: [
-      "find-me-1.onrender.com",
+      "https://find-me-v4yl.onrender.com",
       "localhost",              
     ],
   }
