@@ -37,7 +37,7 @@ main().then(() => {
 })
 
 
-const whitelist = ['https://find-me-1.onrender.com', "http://localhost:5173", 'http://localhost:4000']
+const whitelist = ['https://find-me-v4yl.onrender.com', "http://localhost:5173", 'http://localhost:4000']
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {

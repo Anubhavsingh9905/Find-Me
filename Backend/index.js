@@ -46,7 +46,7 @@ wss.on('connection', function(ws) {
   });
 });
 
-let PORT = 4000 | process.env.PORT;
+let PORT = 4000 || process.env.PORT;
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running at http://0.0.0.0:${PORT}`);
