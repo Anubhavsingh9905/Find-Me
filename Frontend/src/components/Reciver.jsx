@@ -4,7 +4,7 @@ export const Receiver = () => {
     const videoRef = useRef(null);
     
     useEffect(() => {
-        const socket = new WebSocket("ws://localhost:4000");
+        const socket = new WebSocket(import.meta.env.VITE_WS_HOST);
         socket.onopen = () => {
             socket.send(JSON.stringify({
                 type: 'receiver'
